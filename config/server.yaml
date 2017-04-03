@@ -1,0 +1,3 @@
+default:
+    server: "\\177.105.35.74"
+    cwd: "Siout"
