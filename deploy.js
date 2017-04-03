@@ -9,6 +9,7 @@ var deployer = new Deployer();
 deployer.task('echoFiles', deploy => {
 	deploy
 		.search("./**/*.js", "./node_modules/**/*")
+		.zip("deploy.zip")
 		.echo();
 });
 
