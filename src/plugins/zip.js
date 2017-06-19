@@ -1,32 +1,37 @@
-const Plugin = require('../core/plugin');
-const removeRoot = require('../core/options/remove-root');
-const removePrefix = require('../core/options/remove-prefix');
-const zipLib = require('node-zip');
-const fs = require('fs');
-const path = require('path');
+(function() {
+	"use strict";
 
-class ZipPlugin extends Plugin {
+	const Plugin = require('../core/plugin');
+	const removeRoot = require('../core/options/remove-root');
+	const removePrefix = require('../core/options/remove-prefix');
+	const zipLib = require('node-zip');
+	const fs = require('fs');
+	const path = require('path');
 
-	constructor() {
-		super("Zip", "1.0.0");
-	}
+	class ZipPlugin extends Plugin {
 
-	run(outputFile, options) {
-		options = options || {};
-		let zip = zipLib();
-		let filesToZip = this.buffer.in;
-		for (let rawFilename of filesToZip) {
-			let filename = removeRoot(rawFilename, options);
-			filename = removePrefix(filename, options);
-			let content = fs.readFileSync(rawFilename, 'utf8');
-			zip.file(filename, content);
+		constructor() {
+			super("Zip", "1.0.0");
 		}
-		let data = zip.generate({ base64: false, compression: 'DEFLATE'});
-		fs.writeFileSync(outputFile, data, 'binary');
-		this.buffer.out = outputFile;
-		
-		return super.run();
-	}
-}
 
-module.exports = ZipPlugin;
+		run(outputFile, options) {
+			options = options || {};
+			let zip = zipLib();
+			let filesToZip = this.buffer.in;
+			for (let rawFilename of filesToZip) {
+				let filename = removeRoot(rawFilename, options);
+				filename = removePrefix(filename, options);
+				let content = fs.readFileSync(rawFilename, 'utf8');
+				zip.file(filename, content);
+			}
+			let data = zip.generate({ base64: false, compression: 'DEFLATE'});
+			fs.writeFileSync(outputFile, data, 'binary');
+			this.buffer.out = outputFile;
+			
+			return super.run();
+		}
+	}
+
+	module.exports = ZipPlugin;
+
+})();

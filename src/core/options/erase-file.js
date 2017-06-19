@@ -1,9 +1,14 @@
-const fs = require('fs');
+(function() {
+	"use strict";
 
-function eraseFile(filename, options) {
-	if (options.eraseFile) {
-		fs.unlinkSync(filename);
+	const fs = require('fs');
+
+	function eraseFile(filename, options) {
+		if (options.eraseFile) {
+			fs.unlinkSync(filename);
+		}
 	}
-}
 
-module.exports = eraseFile;
+	module.exports = eraseFile;
+
+})();

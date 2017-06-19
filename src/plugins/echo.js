@@ -1,26 +1,31 @@
-const Plugin = require('../core/plugin');
+(function() {
+	"use strict";
 
-class EchoPlugin extends Plugin {
+	const Plugin = require('../core/plugin');
 
-	constructor() {
-		super("Echo", "1.0.0");
-	}
+	class EchoPlugin extends Plugin {
 
-	run() {
-		let fileList = this.buffer.in;
-		if (Array.isArray(fileList)) {
-			for (let file of fileList) {
-				console.log(file);
-			}
-		} else {
-			console.log(fileList);
+		constructor() {
+			super("Echo", "1.0.0");
 		}
 
-		this.buffer.out = this.buffer.in;
+		run() {
+			let fileList = this.buffer.in;
+			if (Array.isArray(fileList)) {
+				for (let file of fileList) {
+					console.log(file);
+				}
+			} else {
+				console.log(fileList);
+			}
 
-		return super.run();
+			this.buffer.out = this.buffer.in;
+
+			return super.run();
+		}
+
 	}
 
-}
+	module.exports = EchoPlugin;
 
-module.exports = EchoPlugin;
+})();

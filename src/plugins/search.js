@@ -1,21 +1,26 @@
-const fs = require('fs');
-const glob = require('glob');
-const Plugin = require('../core/plugin');
+(function() {
+	"use strict";
 
-class SearchPlugin extends Plugin {
+	const fs = require('fs');
+	const glob = require('glob');
+	const Plugin = require('../core/plugin');
 
-	constructor() {
-		super("Search", "1.0.0");
+	class SearchPlugin extends Plugin {
+
+		constructor() {
+			super("Search", "1.0.0");
+		}
+
+		run(input, ignore) {
+			this.buffer.in = {};
+			this.buffer.out = glob.sync(input, {
+				ignore: ignore
+			});
+
+			return super.run();
+		}
 	}
 
-	run(input, ignore) {
-		this.buffer.in = {};
-		this.buffer.out = glob.sync(input, {
-			ignore: ignore
-		});
+	module.exports = SearchPlugin;
 
-		return super.run();
-	}
-}
-
-module.exports = SearchPlugin;
+})();

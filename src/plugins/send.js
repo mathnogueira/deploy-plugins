@@ -1,23 +1,28 @@
-const Plugin = require('../core/plugin');
-const eraseFile = require('../core/options/erase-file');
-const fs = require('fs-sync');
+(function() {
+	"use strict";
 
-class SendPlugin extends Plugin {
+	const Plugin = require('../core/plugin');
+	const eraseFile = require('../core/options/erase-file');
+	const fs = require('fs-sync');
 
-	constructor() {
-		super("Send", "1.0.0");
+	class SendPlugin extends Plugin {
+
+		constructor() {
+			super("Send", "1.0.0");
+		}
+
+		run(destination, options) {
+			options = options || {};
+			let file = this.buffer.in;
+			fs.copy(file, destination);
+			this.buffer.out = destination;
+
+			eraseFile(file, options);
+			return super.run();
+		}
+
 	}
 
-	run(destination, options) {
-		options = options || {};
-		let file = this.buffer.in;
-		fs.copy(file, destination);
-		this.buffer.out = destination;
+	module.exports = SendPlugin;
 
-		eraseFile(file, options);
-		return super.run();
-	}
-
-}
-
-module.exports = SendPlugin;
+})();

@@ -1,11 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-const mkdirp = require('mkdirp');
+(function() {
+	"use strict";
+	const fs = require('fs');
+	const path = require('path');
+	const mkdirp = require('mkdirp');
 
-function saveFile(filename, data) {
-	let basePath = path.dirname(filename);
-	mkdirp.sync(basePath);
-	fs.writeFileSync(filename, data);
-}
+	function saveFile(filename, data) {
+		let basePath = path.dirname(filename);
+		mkdirp.sync(basePath);
+		fs.writeFileSync(filename, data);
+	}
 
-module.exports = saveFile;
+	module.exports = saveFile;
+
+})();
