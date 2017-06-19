@@ -7,7 +7,7 @@ class EchoPlugin extends Plugin {
 	}
 
 	run() {
-		let fileList = this.buffer.out;
+		let fileList = this.buffer.in;
 		if (Array.isArray(fileList)) {
 			for (let file of fileList) {
 				console.log(file);
@@ -15,6 +15,8 @@ class EchoPlugin extends Plugin {
 		} else {
 			console.log(fileList);
 		}
+
+		this.buffer.out = this.buffer.in;
 
 		return super.run();
 	}

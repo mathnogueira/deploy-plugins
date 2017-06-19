@@ -10,6 +10,8 @@ class Plugin {
 	}
 
 	run() {
+		this.buffer.in = this.buffer.out;
+		this.buffer.out = {};
 		return this.buffer.container;
 	}
 

@@ -1,16 +1,43 @@
-const Module = require('./src/core/module');
-const Echo = require('./src/plugins/echo');
-const Deployer = require('./src/deployer');
+const deployer = require('./src/deployer')();
+const moment = require('moment');
 
+// Sequencias de tarefas para fazer o deploy
+deployer.task('deploy', ['deploy-logica', 'deploy-interface']);
 
-Deployer.initialize();
-var deployer = new Deployer();
-
-deployer.task('echoFiles', deploy => {
+// Faz o backup da interface que está no servidor.
+deployer.task('backup-interface', deploy => {
+	let date = moment().format('DD-MM-YYYY HH-mm');
 	deploy
-		.search("./**/*.js", "./node_modules/**/*")
-		.zip("deploy.zip")
-		.echo();
+		.search('%Server%/sigerh/Interface/**/*.*')
+		.zip('backup.zip', { removePrefix: '%Server%/sigerh/Interface/' })
+		.send(`%Server%/sigerh/backups/interface/${date}.zip`);
 });
 
-deployer.executeTask('echoFiles');
+// Faz o backup da lógica que está no servidor.
+deployer.task('backup-logica', deploy => {
+	let date = moment().format('DD-MM-YYYY HH-mm');
+	deploy
+		.search('%Server%/sigerh/Logica/**/*.*')
+		.zip('backup.zip', { removePrefix: '%Server%/sigerh/Interface/' })
+		.send(`%Server%/sigerh/backups/logica/${date}.zip`);
+});
+
+// Faz o deploy da nova build da interface
+deployer.task('deploy-interface', deploy => {
+	deploy
+		.search('D:/workspace/sigerh-pa/Interface/dist/**/*.*')
+		.zip('interface.zip', { removePrefix: 'D:/workspace/sigerh-pa/Interface/dist/'})
+		.send('%Server%/sigerh/Interface/interface.zip', { eraseFile: true })
+		.unzip({ eraseFile: true });
+});
+
+// Faz o deploy da lógica
+deployer.task('deploy-logica', deploy => {
+	deploy
+		.search('D:/publish/sigerh-pa/**/*.*')
+		.zip('logica.zip', { removePrefix: 'D:/publish/sigerh-pa/' })
+		.send('%Server%/sigerh/Logica/logica.zip', { eraseFile: true })
+		.unzip({ eraseFile: true });
+});
+
+deployer.executeTask('deploy');

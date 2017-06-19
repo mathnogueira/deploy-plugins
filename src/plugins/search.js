@@ -9,6 +9,7 @@ class SearchPlugin extends Plugin {
 	}
 
 	run(input, ignore) {
+		this.buffer.in = {};
 		this.buffer.out = glob.sync(input, {
 			ignore: ignore
 		});
