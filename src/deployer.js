@@ -30,6 +30,7 @@ class Deployer {
 			path: 'config/environments/'
 		});
 		for (let pluginName in plugins) {
+			if (!plugins.hasOwnProperty(pluginName)) continue;
 			let Plugin = require(plugins[pluginName].path);
 			let plugin = new Plugin();
 			plugin.setBuffer(Deployer.prototype.streamBuffer);
@@ -91,7 +92,7 @@ class Deployer {
 
 Deployer.prototype.streamBuffer = {
 	in: {},
-	out: {},
+	out: {}
 };
 
 module.exports = configureDeployer;

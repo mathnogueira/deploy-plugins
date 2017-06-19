@@ -12,7 +12,7 @@ class Module {
 	}
 
 	getPluginByName(name) {
-		return _.find(this.plugins, plugin => plugin.name == name);
+		return _.find(this.plugins, plugin => plugin.name === name);
 	}
 }
 
