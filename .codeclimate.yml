@@ -1,1 +1,6 @@
-exclude_paths: deploy.js
+engines:
+  eslint:
+    enabled: true
+
+ratings:
+  exclude_paths: deploy.js
