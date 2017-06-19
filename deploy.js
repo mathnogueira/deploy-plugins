@@ -2,6 +2,8 @@ const deployer = require('./src/deployer')();
 const moment = require('moment');
 
 // Sequencias de tarefas para fazer o deploy
+deployer.task('default', ['backup', 'deploy']);
+deployer.task('backup', ['backup-interface', 'backup-logica']);
 deployer.task('deploy', ['deploy-logica', 'deploy-interface']);
 
 // Faz o backup da interface que está no servidor.
@@ -40,4 +42,5 @@ deployer.task('deploy-logica', deploy => {
 		.unzip({ eraseFile: true });
 });
 
-deployer.executeTask('deploy');
+// deployer.executeTask('deploy');
+deployer.run();
