@@ -3,14 +3,9 @@
 
 	function getEnvironemntConfigVariables(string) {
 		"use strict";
-		const configRegex = /.*\%(.+)\%.*/;
+		const configRegex = /.*\@\{(.+)\}.*/;
 		let a = configRegex.exec(string);
-		// console.log(string, a);
 		return a;
-	}
-
-	function replaceVariables(string, variables, config) {
-		// console.log(variables);
 	}
 
 	function replaceArgument(arg, config) {
@@ -24,7 +19,7 @@
 			if (configVars) {
 				let variable = configVars[1];
 				let configVar = config[variable];
-				arg = arg.replace('%' + variable + '%', configVar);
+				arg = arg.replace('@{' + variable + '}', configVar);
 			}
 			return arg;
 		}

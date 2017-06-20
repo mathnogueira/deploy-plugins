@@ -3,6 +3,12 @@
 	
 	const minimist = require('minimist');
 	const environmentReplaceDecorator = require('./core/config-replace-decorator');
+	const konfig = require('konfig');
+
+	// Async lock to turn async operations into sync
+	global.asyncLock = {
+		locked: false
+	};
 
 	/**
 	 * Create and configura an instance of the deployer. It will load the initial
@@ -58,10 +64,10 @@
 		 * @param {string} env Environment that will be the target of the deploy.
 		 */
 		static initialize(env) {
-			const plugins = require('konfig')({
+			const plugins = konfig({
 				path: 'config/plugins/'
 			});
-			const environments = require('konfig')({
+			const environments = konfig({
 				path: 'config/environments/'
 			});
 			for (let pluginName in plugins) {

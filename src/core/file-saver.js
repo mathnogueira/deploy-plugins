@@ -7,7 +7,7 @@
 	function saveFile(filename, data) {
 		let basePath = path.dirname(filename);
 		mkdirp.sync(basePath);
-		fs.writeFileSync(filename, data);
+		fs.writeFileSync(filename, data, 'binary');
 	}
 
 	module.exports = saveFile;

@@ -1,0 +1,25 @@
+{
+  "name": "deploy",
+  "version": "1.0.0",
+  "description": "Para publicar no ambiente de teste usando a task default:\r ```` node deploy.js ````",
+  "main": "deploy.js",
+  "dependencies": {
+    "git-rev-sync": "^1.9.1",
+    "git-user-name": "^1.2.0",
+    "fs-sync": "^1.0.4",
+    "glob": "^7.1.1",
+    "konfig": "^0.2.1",
+    "lodash": "^4.17.4",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.18.1",
+    "node-zip": "^1.1.1",
+    "minimist": "^1.2.0",
+    "promise": "^8.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -18,7 +18,7 @@
 			options = options || {};
 			let zipFile = this.buffer.in;
 			let destinationPath = path.dirname(zipFile);
-			let zipArchive = fs.readFileSync(zipFile);
+			let zipArchive = fs.readFileSync(zipFile, 'binary');
 			let extracted = new unzip(zipArchive, {base64: false, checkCRC32: true});
 			let extractedFiles = extracted.files;
 			let filenames = Object.keys(extractedFiles);
